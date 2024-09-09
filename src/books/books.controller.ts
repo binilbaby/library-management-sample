@@ -40,29 +40,3 @@ export class BooksController {
   }
 }
 
-
-// import { CreateBookDto, IssueBookDto } from '../common/dto';
-
-// @Controller('books')
-// export class BooksController {
-//   constructor(private booksService: BooksService) {}
-
-//   @Roles('librarian')
-//   @UseGuards(RolesGuard)
-//   @Post('add')
-//   async addBook(@Body() createBookDto: CreateBookDto) {
-//     return this.booksService.addBook(createBookDto);
-//   }
-
-//   @Roles('librarian')
-//   @UseGuards(RolesGuard)
-//   @Post('issue')
-//   async issueBook(@Body() issueBookDto: IssueBookDto) {
-//     return this.booksService.issueBook(issueBookDto);
-//   }
-
-//   @Get('all')
-//   async getAllBooks() {
-//     return this.booksService.getAllBooks();
-//   }
-// }

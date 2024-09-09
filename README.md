@@ -78,6 +78,6 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 - Author - [BINIL BABY]
 
-## License
+##  API-Documentation 
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+ [Swagger](http://localhost:3001/api/docs#/).
