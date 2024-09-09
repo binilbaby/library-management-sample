@@ -9,14 +9,17 @@ export class Book extends Document {
   @Prop({ required: true })
   author: string;
 
-  @Prop({ required: true })
+  @Prop()
+  publishedDate: string;
+
+  @Prop({ unique: true, required: true })
   isbn: string;
 
-  @Prop({ default: null })
-  issuedTo: string; // Reference to user id (Staff/Student)
+  @Prop()
+  description: string;
 
-  @Prop({ default: null })
-  issuedBy: string; // Librarian id
+  @Prop()
+  thumbnail: string;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

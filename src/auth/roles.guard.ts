@@ -1,5 +1,3 @@
-
-
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 
@@ -14,12 +12,10 @@ export class RolesGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
     
-    // if (!user) {
-    //   console.error('User is not defined');
-    //   return false; // User must be defined to check roles
-    // }
-
-    console.log('User:', user);
+    if (!user) {
+      console.error('User is not defined');
+      return false; // User must be defined to check roles
+    }
 
     if (!user.role) {
       console.error('User role is not defined');

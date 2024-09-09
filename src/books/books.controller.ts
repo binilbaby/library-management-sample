@@ -2,9 +2,9 @@ import { Controller, Post, Body, Get, UseGuards } from '@nestjs/common';
 import { BooksService } from './books.service';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
-import { CreateBookDto } from '../common/dto/create-book.dto';
 import { IssueBookDto } from '../common/dto/issue-book.dto';
-import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiResponse ,ApiBody} from '@nestjs/swagger';  
+
 
 @ApiTags('Books') // Grouping the endpoints under "Books" in Swagger
 @ApiBearerAuth() // Adds JWT Bearer Authentication requirement to this controller
@@ -15,11 +15,23 @@ export class BooksController {
   @Post('add')
   @Roles('librarian')
   @UseGuards(RolesGuard)
-  @ApiOperation({ summary: 'Add a new book to the library (Librarian only)' })
-  @ApiResponse({ status: 201, description: 'Book successfully added.' })
+  @ApiOperation({ summary: 'Add a new book to the library using ISBN (Librarian only)' })
+  @ApiResponse({ status: 201, description: 'Book successfully added using ISBN.' })
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  async addBook(@Body() createBookDto: CreateBookDto) {
-    return this.booksService.addBook(createBookDto);
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        isbn: {
+          type: 'string',
+          example: '9780140328721',
+          description: 'The ISBN number of the book to be added',
+        },
+      },
+    },
+  }) // This decorator describes the body parameter in Swagger
+  async addBook(@Body('isbn') isbn: string) {
+    return this.booksService.addBookByISBN(isbn);
   }
 
   @Post('issue')
@@ -39,4 +51,3 @@ export class BooksController {
     return this.booksService.getAllBooks();
   }
 }
-
