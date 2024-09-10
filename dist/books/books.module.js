@@ -9,17 +9,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BooksModule = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-const book_schema_1 = require("./schemas/book.schema");
 const books_service_1 = require("./books.service");
 const books_controller_1 = require("./books.controller");
+const book_schema_1 = require("./schemas/book.schema");
+const user_schema_1 = require("../users/schemas/user.schema");
 let BooksModule = class BooksModule {
 };
 exports.BooksModule = BooksModule;
 exports.BooksModule = BooksModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: book_schema_1.Book.name, schema: book_schema_1.BookSchema }])],
-        providers: [books_service_1.BooksService],
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: book_schema_1.Book.name, schema: book_schema_1.BookSchema }]),
+            mongoose_1.MongooseModule.forFeature([{ name: user_schema_1.User.name, schema: user_schema_1.UserSchema }]),
+        ],
         controllers: [books_controller_1.BooksController],
+        providers: [books_service_1.BooksService],
     })
 ], BooksModule);
 //# sourceMappingURL=books.module.js.map

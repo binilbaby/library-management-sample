@@ -22,7 +22,10 @@ let RolesGuard = class RolesGuard {
             return true;
         const request = context.switchToHttp().getRequest();
         const user = request.user;
-        console.log('User:', user);
+        if (!user) {
+            console.error('User is not defined');
+            return false;
+        }
         if (!user.role) {
             console.error('User role is not defined');
             return false;

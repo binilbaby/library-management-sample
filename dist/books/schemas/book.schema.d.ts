@@ -2,9 +2,10 @@ import { Document } from 'mongoose';
 export declare class Book extends Document {
     title: string;
     author: string;
+    publishedDate: string;
     isbn: string;
-    issuedTo: string;
-    issuedBy: string;
+    description: string;
+    thumbnail: string;
 }
 export declare const BookSchema: import("mongoose").Schema<Book, import("mongoose").Model<Book, any, any, any, Document<unknown, any, Book> & Book & Required<{
     _id: unknown;

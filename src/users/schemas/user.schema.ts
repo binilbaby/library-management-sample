@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Schema as MongooseSchema, Types } from 'mongoose';
+import { Book } from '../../books/schemas/book.schema';
 
 export type UserDocument = User & Document;
 
@@ -16,9 +17,9 @@ export class User {
 
   @Prop({ required: true })
   role: string; // librarian, staff, or student
-
-  @Prop({ default: [] })
-  issuedBooks: string[]; // Array of book IDs
+  
+  @Prop({ type: [{ type: MongooseSchema.Types.ObjectId, ref: 'Book' }] })
+  issuedBooks: Types.ObjectId[]; // Array of ObjectIds referencing Book
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

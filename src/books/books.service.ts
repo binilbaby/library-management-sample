@@ -2,12 +2,15 @@ import { Injectable, BadRequestException, NotFoundException } from '@nestjs/comm
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import axios from 'axios';
-import { Book } from './schemas/book.schema';
+import { Book } from '../books/schemas/book.schema';
+import { User } from '../users/schemas/user.schema';
 import { CreateBookDto } from '../common/dto/create-book.dto';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class BooksService {
-  constructor(@InjectModel(Book.name) private bookModel: Model<Book>) {}
+  constructor(@InjectModel(Book.name) private bookModel: Model<Book>,
+   @InjectModel(User.name) private userModel: Model<User>,) {}
 
   // Fetch book information using a third-party API by ISBN and create the book
   async addBookByISBN(isbn: string): Promise<Book> {
@@ -51,5 +54,40 @@ export class BooksService {
       { new: true }
     ).exec();
   }
+
+  // Method to view all books issued to a user (Staff or Student)
+  async viewIssuedBooks(userId: string) {
+    const user = await this.userModel.findById(userId).populate('issuedBooks');
+    if (!user) {
+      throw new NotFoundException(`User with ID ${userId} not found`);
+    }
+    return user.issuedBooks;
+  }
+
+  // Method to transfer a book (Staff only)
+  async transferBook(bookId: string, fromUserId: string, toUserId: string) {
+    const fromUser = await this.userModel.findById(fromUserId);
+    const toUser = await this.userModel.findById(toUserId);
+    const book = await this.bookModel.findById(bookId);
+  
+    if (!fromUser || !toUser) {
+      throw new NotFoundException('User not found');
+    }
+  
+    if (!book || !fromUser.issuedBooks.some(book => book.toString() === bookId)) {
+      throw new NotFoundException('Book not found or not issued to the user');
+    }
+  
+    // Remove book from the current user
+    fromUser.issuedBooks = fromUser.issuedBooks.filter(b => b.toString() !== bookId);
+    await fromUser.save();
+  
+    // Add book to the new user
+    toUser.issuedBooks.push(new Types.ObjectId(bookId));
+  await toUser.save();
+  
+    return { message: 'Book transferred successfully' };
+  }
+  
 }
 

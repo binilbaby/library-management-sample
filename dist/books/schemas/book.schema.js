@@ -24,17 +24,21 @@ __decorate([
     __metadata("design:type", String)
 ], Book.prototype, "author", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true }),
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Book.prototype, "publishedDate", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ unique: true, required: true }),
     __metadata("design:type", String)
 ], Book.prototype, "isbn", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: null }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Book.prototype, "issuedTo", void 0);
+], Book.prototype, "description", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ default: null }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
-], Book.prototype, "issuedBy", void 0);
+], Book.prototype, "thumbnail", void 0);
 exports.Book = Book = __decorate([
     (0, mongoose_1.Schema)()
 ], Book);

@@ -44,6 +44,31 @@ export class BooksController {
     return this.booksService.issueBook(issueBookDto);
   }
 
+  // Staff & Students: View all books issued to them
+  @Get('issued')
+  @Roles('staff', 'student')
+  @UseGuards(RolesGuard)
+  @ApiOperation({ summary: 'View all books issued to the current user (Staff/Student)' })
+  @ApiResponse({ status: 200, description: 'List of issued books.' })
+  async viewIssuedBooks(@Body('userId') userId: string) {
+    return this.booksService.viewIssuedBooks(userId);
+  }
+
+  // Staff: Transfer books to another student or staff member
+  @Post('transfer')
+  @Roles('staff')
+  @UseGuards(RolesGuard)
+  @ApiOperation({ summary: 'Transfer a book to another student or staff (Staff only)' })
+  @ApiResponse({ status: 200, description: 'Book successfully transferred.' })
+  @ApiResponse({ status: 403, description: 'Forbidden.' })
+  async transferBook(
+    @Body('bookId') bookId: string,
+    @Body('toUserId') toUserId: string,
+    @Body('fromUserId') fromUserId: string
+  ) {
+    return this.booksService.transferBook(bookId, fromUserId, toUserId);
+  }
+
   @Get('all')
   @ApiOperation({ summary: 'Get all books in the library' })
   @ApiResponse({ status: 200, description: 'List of all books.' })

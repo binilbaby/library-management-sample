@@ -15,15 +15,46 @@ class CreateBookDto {
 }
 exports.CreateBookDto = CreateBookDto;
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'The Great Gatsby' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Title of the book',
+        example: 'The Hobbit',
+    }),
     __metadata("design:type", String)
 ], CreateBookDto.prototype, "title", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'F. Scott Fitzgerald' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Author of the book',
+        example: 'J.R.R. Tolkien',
+    }),
     __metadata("design:type", String)
 ], CreateBookDto.prototype, "author", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '9780743273565' }),
+    (0, swagger_1.ApiProperty)({
+        description: 'Published date of the book',
+        example: '1937',
+    }),
+    __metadata("design:type", String)
+], CreateBookDto.prototype, "publishedDate", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'ISBN of the book',
+        example: '9780140328721',
+    }),
     __metadata("design:type", String)
 ], CreateBookDto.prototype, "isbn", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Description of the book',
+        example: 'A fantasy novel about a hobbit’s adventure.',
+    }),
+    __metadata("design:type", String)
+], CreateBookDto.prototype, "description", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'Thumbnail of the book',
+        example: 'https://example.com/thumbnail.jpg',
+        required: false,
+    }),
+    __metadata("design:type", String)
+], CreateBookDto.prototype, "thumbnail", void 0);
 //# sourceMappingURL=create-book.dto.js.map
